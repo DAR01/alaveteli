@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 module AlaveteliPro
+  # Helper methods for the batch builder
   module BatchRequestAuthoritySearchesHelper
     def batch_notes_allowed_tags
       Alaveteli::Application.config.action_view.sanitized_allowed_tags -
