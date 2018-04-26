@@ -863,14 +863,14 @@ class PublicBody < ActiveRecord::Base
     success_states = %w(successful partially_successful)
     basic_params = { public_body_id: id }
 
-    mappings = [
-      ['info_requests_not_held_count', { awaiting_description: false,
-                                         described_state: 'not_held' }],
-      ['info_requests_successful_count', { awaiting_description: false,
-                                           described_state: success_states }],
-      ['info_requests_visible_classified_count', { awaiting_description: false }],
-      ['info_requests_visible_count', {}]
-    ]
+    mappings = {
+      info_requests_not_held_count: { awaiting_description: false,
+                                      described_state: 'not_held' },
+      info_requests_successful_count: { awaiting_description: false,
+                                        described_state: success_states },
+      info_requests_visible_classified_count: { awaiting_description: false},
+      info_requests_visible_count: {}
+    }
 
     updated_counts = mappings.reduce({}) do |memo, mapping|
       column = mapping.first
