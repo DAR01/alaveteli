@@ -872,10 +872,14 @@ class PublicBody < ActiveRecord::Base
       ['info_requests_visible_count', {}]
     ]
 
-    mappings.each do |column, extra_params|
-      params = basic_params.clone.update extra_params
-      update_column(column, InfoRequest.where(params).is_searchable.count)
+    updated_counts = mappings.reduce({}) do |memo, mapping|
+      column = mapping.first
+      params = basic_params.clone.update(mapping.last)
+      memo[column] = InfoRequest.where(params).is_searchable.count
+      memo
     end
+
+    update_columns(updated_counts)
   end
 
   private
